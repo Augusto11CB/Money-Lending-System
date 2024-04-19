@@ -1,0 +1,178 @@
+openapi: 3.0.0
+info:
+  title: API de Simulação de Empréstimos
+  description: API para realizar simulações de empréstimos personalizados para clientes da XYZ.
+  version: 1.0.0
+  contact:
+    name: Equipe de Desenvolvimento XYZ
+    email: suporte@xyz.com.br
+servers:
+  - url: https://api-simulacao.xyz.com.br
+paths:
+  /simulacoes/cliente/{idCliente}:
+    get:
+      summary: Obter simulações de um cliente
+      description: Recupera o histórico de todas as simulações realizadas por um cliente específico.
+      parameters:
+        - in: path
+          name: idCliente
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: Simulações do cliente encontradas com sucesso.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: ID da simulação.
+                    renda:
+                      type: number
+                      description: Renda mensal bruta do cliente.
+                    valorDesejado:
+                      type: number
+                      description: Valor total desejado do empréstimo.
+                    prazoMeses:
+                      type: integer
+                      description: Prazo do empréstimo em meses.
+                    simulacoes:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          taxaJuros:
+                            type: number
+                            description: Taxa de juros anual do empréstimo.
+                          prazoMeses:
+                            type: integer
+                            description: Prazo do empréstimo em meses.
+                          parcelaMensal:
+                            type: number
+                            description: Valor da parcela mensal do empréstimo.
+                          custoTotal:
+                            type: number
+                            description: Custo total do empréstimo, incluindo juros.
+        '404':
+          description: Cliente não encontrado ou sem simulações.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensagem:
+                    type: string
+                    description: Mensagem de erro inform
+  /simulacoes/{id}:
+    get:
+      summary: Obter simulação por ID
+      description: Recupera os detalhes de uma simulação específica pelo seu ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: Simulação encontrada com sucesso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: ID da simulação.
+                  renda:
+                    type: number
+                    description: Renda mensal bruta do cliente.
+                  valorDesejado:
+                    type: number
+                    description: Valor total desejado do empréstimo.
+                  prazoMeses:
+                    type: integer
+                    description: Prazo do empréstimo em meses.
+                  simulacoes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        taxaJuros:
+                          type: number
+                          description: Taxa de juros anual do empréstimo.
+                        prazoMeses:
+                          type: integer
+                          description: Prazo do empréstimo em meses.
+                        parcelaMensal:
+                          type: number
+                          description: Valor da parcela mensal do empréstimo.
+                        custoTotal:
+                          type: number
+                          description: Custo total do empréstimo, incluindo juros.
+        '404':
+          description: Simulação não encontrada.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensagem:
+                    type: string
+                    description: Mensagem de erro informando que a simulação não foi encontrada.
+  /simulacoes:
+    post:
+      summary: Realiza simulação de empréstimo
+      description: Recebe dados do cliente e retorna simulações de empréstimos com diferentes taxas e prazos.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                renda:
+                  type: number
+                  description: Renda mensal bruta do cliente.
+                  minimum: 0
+                valorDesejado:
+                  type: number
+                  description: Valor total desejado do empréstimo.
+                  minimum: 0
+                prazoMeses:
+                  type: integer
+                  description: Prazo do empréstimo em meses.
+                  minimum: 6
+                  maximum: 60
+      responses:
+        '200':
+          description: Simulação de empréstimo bem-sucedida.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  simulacoes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        taxaJuros:
+                          type: number
+                          description: Taxa de juros anual do empréstimo.
+                        prazoMeses:
+                          type: integer
+                          description: Prazo do empréstimo em meses.
+                        parcelaMensal:
+                          type: number
+                          description: Valor da parcela mensal do empréstimo.
+                        custoTotal:
+                          type: number
+                          description: Custo total do empréstimo, incluindo juros.
