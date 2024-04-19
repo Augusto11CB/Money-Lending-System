@@ -4,6 +4,3 @@
 
 ## APIs 
 - [Simulação](./simulacao.yaml)
-- [Contratação](./contratacao.yaml)
-- [Formulação](./formulacao.yaml)
-- [Crédito](./credito.yaml)
