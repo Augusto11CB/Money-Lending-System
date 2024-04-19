@@ -23,7 +23,7 @@ Feature: Simulação, Contratação, Formalização e Solicitação de Crédito
     Quando informo meus dados na API de Simulação e recebo as propostas
     E contrato uma das propostas retornadas
     E assino o contrato retornado pela API de Formalização
-    Então a API de Crédito é acionada com os dados do contrato para solicitar o crédito
+    Então se a formalização ocorrer com sucesso a API de Crédito terá recebido a solicitação de credito
     E recebo a resposta da API de Crédito com o status da solicitação
 
 
@@ -65,11 +65,6 @@ public class SimulacaoContrataFormalizaSolicitaCreditoSteps {
     @And("assino o contrato retornado pela API de Formalização")
     public void assinarContrato() {
         contratoAPI.assinar(contrato.getId());
-    }
-
-    @Then("a API de Crédito é acionada com os dados do contrato para solicitar o crédito")
-    public void solicitarCredito() {
-        creditoAPI.solicitar(contrato);
     }
 
     @And("recebo a resposta da API de Crédito com o status da solicitação")
